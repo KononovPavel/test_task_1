@@ -1,0 +1,10 @@
+.photos{
+    display: flex;
+    max-width: 100vw;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.img{
+    margin: 30px 20px;
+}
