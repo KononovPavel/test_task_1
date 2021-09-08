@@ -1,4 +1,4 @@
-import { Dispatch } from "redux"
+import {Dispatch} from "redux"
 import {Photo} from "../../API/rootApi";
 
 
@@ -7,13 +7,13 @@ const SET_ONE_PHOTO = 'SET_ONE_PHOTO'
 const ADD_COMMENT = 'ADD_COMMENT'
 
 
-interface commentType {
+export interface commentType {
     id: number,
     text: string,
     date: string
 }
 
- export interface PhotoType {
+export interface PhotoType {
     id: number,
     url: string,
     comments: commentType[]
@@ -71,7 +71,7 @@ export const PhotoReducer = (state: InitStateType = initState, action: actionTyp
 }
 
 
-const setPhotos = (photos: any): setAllPhotos => ({
+const setPhotos = (photos: PhotoType[]): setAllPhotos => ({
     type: SET_PHOTOS,
     payload: photos
 })
@@ -79,7 +79,15 @@ const setPhotos = (photos: any): setAllPhotos => ({
 const setOnePhoto = (photo: PhotoType): setOnePhoto => ({type: SET_ONE_PHOTO, payload: photo})
 const addComment = (comment: commentType): addComment => ({type: ADD_COMMENT, comment: comment})
 
-export const getPhotos = ()=>async (dispatch:Dispatch)=>{
-    const response = await Photo.getAllPhoto().then(data=> data.data)
+export const getPhotos = () => async (dispatch: Dispatch) => {
+    const response = await Photo.getAllPhoto().then(data => data.data)
     dispatch(setPhotos(response));
+}
+export const getCurrentPhoto = (id: number) => async (dispatch: Dispatch) => {
+    const response = await Photo.getOnePhoto(id).then(data => data.data)
+    dispatch(setOnePhoto(response))
+}
+export const addPost = (comment: commentType, id: number) => async (dispatch: Dispatch) => {
+     // await Photo.addComment(id, comment)
+    dispatch(addComment(comment))
 }
